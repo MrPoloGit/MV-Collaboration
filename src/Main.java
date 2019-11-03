@@ -1,14 +1,15 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        ArrayList<ArrayList<String>> corrects = new ArrayList<>();
+
         ArrayList<String> correct1 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
-        ArrayList<String> correct2 = TextLib.readDoc("data/CorrectOrders/CorrectOrder2.txt");
-        ArrayList<String> correct3 = TextLib.readDoc("data/CorrectOrders/CorrectOrder3.txt");
-        ArrayList<String> correct4 = TextLib.readDoc("data/CorrectOrders/CorrectOrder4.txt");
+        ArrayList<String> correct2 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
+        ArrayList<String> correct3 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
+        ArrayList<String> correct4 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
 
         ArrayList<Question> Trials = new ArrayList<>();
 
@@ -22,19 +23,26 @@ public class Main {
 
         }
 
+
         // Calculating Accucracy
         double percentage = 0;
-        ArrayList<String> answers1 = reOrderbybest(Trials.get(1).getAnswers(), Score(Trials.get(1)));
+        ArrayList<String> answers1 = reOrderbybest(Trials.get(0).getAnswers(), Score(Trials.get(0)));
         percentage += correctness(answers1, correct1);
-        ArrayList<String> answers2 = reOrderbybest(Trials.get(2).getAnswers(), Score(Trials.get(2)));
+        ArrayList<String> answers2 = reOrderbybest(Trials.get(1).getAnswers(), Score(Trials.get(2)));
         percentage += correctness(answers2, correct2);
-        ArrayList<String> answers3 = reOrderbybest(Trials.get(3).getAnswers(), Score(Trials.get(3)));
+        ArrayList<String> answers3 = reOrderbybest(Trials.get(2).getAnswers(), Score(Trials.get(3)));
         percentage += correctness(answers3, correct3);
-        ArrayList<String> answers4 = reOrderbybest(Trials.get(4).getAnswers(), Score(Trials.get(4)));
+        ArrayList<String> answers4 = reOrderbybest(Trials.get(3).getAnswers(), Score(Trials.get(3)));
         percentage += correctness(answers4, correct4);
-        System.out.println(percentage/4);
+        System.out.println(percentage);
 
 
+    }
+
+    private static void printList(ArrayList<String> list){
+        for (String c: list) {
+            System.out.println(c);
+        }
     }
 
     private static void printScores(Question q) {
@@ -73,10 +81,11 @@ public class Main {
     private static ArrayList<String> reOrderbybest(ArrayList<Answer> answers, ArrayList<Double> scores){
         ArrayList<String> reOrder = new ArrayList<>();
         Double[] score = ListtoArray(scores);
-        for (int i = 0; i < answers.size(); i++) {
-            int j = getIndexOfGreatest(scores);
+        for (int i = 0; i < score.length; i++) {
+            int j = getIndexOfGreatest(score);
             reOrder.add(answers.get(j).getText());
             score[j] = -999999.0;
+
         }
         return reOrder;
     }
@@ -91,10 +100,10 @@ public class Main {
 
 
 
-    private static int getIndexOfGreatest(ArrayList<Double> scores){
+    private static int getIndexOfGreatest(Double[] scores){
         int largest = 0;
-        for (int i = 0; i < scores.size(); i++) {
-            if(scores.get(largest) < scores.get(i)) largest = i;
+        for (int i = 0; i < scores.length; i++) {
+            if(scores[largest] < scores[i]) largest = i;
         }
         return largest;
     }
