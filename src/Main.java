@@ -7,9 +7,9 @@ public class Main {
         ArrayList<ArrayList<String>> corrects = new ArrayList<>();
 
         ArrayList<String> correct1 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
-        ArrayList<String> correct2 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
-        ArrayList<String> correct3 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
-        ArrayList<String> correct4 = TextLib.readDoc("data/CorrectOrders/CorrectOrder1.txt");
+        ArrayList<String> correct2 = TextLib.readDoc("data/CorrectOrders/CorrectOrder2.txt");
+        ArrayList<String> correct3 = TextLib.readDoc("data/CorrectOrders/CorrectOrder3.txt");
+        ArrayList<String> correct4 = TextLib.readDoc("data/CorrectOrders/CorrectOrder4.txt");
 
         ArrayList<Question> Trials = new ArrayList<>();
 
@@ -28,14 +28,14 @@ public class Main {
         double percentage = 0;
         ArrayList<String> answers1 = reOrderbybest(Trials.get(0).getAnswers(), Score(Trials.get(0)));
         percentage += correctness(answers1, correct1);
-        ArrayList<String> answers2 = reOrderbybest(Trials.get(1).getAnswers(), Score(Trials.get(2)));
+        ArrayList<String> answers2 = reOrderbybest(Trials.get(1).getAnswers(), Score(Trials.get(1)));
         percentage += correctness(answers2, correct2);
-        ArrayList<String> answers3 = reOrderbybest(Trials.get(2).getAnswers(), Score(Trials.get(3)));
+        ArrayList<String> answers3 = reOrderbybest(Trials.get(2).getAnswers(), Score(Trials.get(2)));
         percentage += correctness(answers3, correct3);
         ArrayList<String> answers4 = reOrderbybest(Trials.get(3).getAnswers(), Score(Trials.get(3)));
         percentage += correctness(answers4, correct4);
         System.out.println(percentage);
-
+        System.out.println(percentage/4);
 
     }
 
@@ -84,7 +84,7 @@ public class Main {
         for (int i = 0; i < score.length; i++) {
             int j = getIndexOfGreatest(score);
             reOrder.add(answers.get(j).getText());
-            score[j] = -999999.0;
+            score[j] = -9999999999.0;
 
         }
         return reOrder;
@@ -98,8 +98,6 @@ public class Main {
         return output;
     }
 
-
-
     private static int getIndexOfGreatest(Double[] scores){
         int largest = 0;
         for (int i = 0; i < scores.length; i++) {
@@ -110,11 +108,11 @@ public class Main {
 
 
     private static double correctness(ArrayList<String> answers, ArrayList<String> correct){
-        int count = 0;
+        double count = 0;
         for (int i = 0; i < correct.size(); i++) {
             if(correct.get(i).equals(answers.get(i))) count++;
         }
-        return count;
+        return count/correct.size();
     }
 
 }
